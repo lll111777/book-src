@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tank.dao.BookDao">
+
+    <resultMap id="BookBaseMap" type="com.tank.model.Book">
+        <id column="ISBN" property="ISBN" jdbcType="CHAR"/>
+        <result column="Title" property="title" jdbcType="VARCHAR"/>
+        <result column="Author" property="author" jdbcType="VARCHAR"/>
+        <result column="Cover" property="cover" jdbcType="VARCHAR"/>
+        <result column="Publish_company" property="publishCompany" jdbcType="VARCHAR"/>
+        <result column="press_year" property="pressYear" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="FLOAT"/>
+        <result column="introduce" property="introduce" jdbcType="VARCHAR"/>
+        <result column="star" property="star" jdbcType="FLOAT"/>
+        <result column="quantity" property="quantity" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <select id="selectBookByISBN" parameterType="java.lang.String" resultMap="BookBaseMap">
+        SELECT * FROM books
+        WHERE ISBN = #{ISBN}
+    </select>
+
+
+
+    <select id="selectAllBook" resultMap="BookBaseMap">
+        SELECT * FROM books
+    </select>
+
+    <select id="selectBookByStar" resultMap="BookBaseMap">
+        SELECT * FROM books
+        ORDER BY star limit 10
+    </select>
+
+    <select id="searchBook" resultMap="BookBaseMap">
+        SELECT * FROM books
+        WHERE author LIKE #{author} AND title LIKE #{title} AND ISBN LIKE #{ISBN}
+    </select>
+
+</mapper>
